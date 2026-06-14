@@ -1,7 +1,14 @@
 
+
 streamlit
 pandas
 plotly
 numpy
 opencv-python
+ultralyticsstreamlit
+streamlit-webrtc
 ultralytics
+opencv-python-headless
+av
+torch
+torchvision
