@@ -161,3 +161,39 @@ elif page == "About":
 
     Harshal Waghe
     """)
+
+
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+from ultralytics import YOLO
+import av
+import cv2
+
+st.title("🤖 Real-Time Object Detection")
+
+# Load YOLO model
+model = YOLO("yolo11n.pt")
+
+class YOLOProcessor(VideoProcessorBase):
+
+    def recv(self, frame):
+
+        img = frame.to_ndarray(format="bgr24")
+
+        results = model(img)
+
+        annotated_frame = results[0].plot()
+
+        return av.VideoFrame.from_ndarray(
+            annotated_frame,
+            format="bgr24"
+        )
+
+webrtc_streamer(
+    key="yolo",
+    video_processor_factory=YOLOProcessor,
+    media_stream_constraints={
+        "video": True,
+        "audio": False
+    }
+)
