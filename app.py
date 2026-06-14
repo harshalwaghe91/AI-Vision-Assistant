@@ -5,8 +5,11 @@ from ultralytics import YOLO
 import av
 
 st.title("Real-Time Object Detection")
+@st.cache_resource
+def load_model():
+    return YOLO("yolo11n.pt")
 
-model = YOLO("yolo11n.pt")
+model = load_model()
 
 class YOLOProcessor(VideoProcessorBase):
 
